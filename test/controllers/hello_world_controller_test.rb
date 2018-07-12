@@ -6,7 +6,7 @@ class HelloWorldControllerTest < ActionDispatch::IntegrationTest
   # end
 
   test "index" do
-    get "/index"
-    assert_equal "/index", path
+    get root_path
+    assert_equal "/", path
   end
 end

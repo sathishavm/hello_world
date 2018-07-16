@@ -13,12 +13,10 @@ COPY public /app/public
 COPY db /app/db
 COPY .ruby-version /app/.ruby-version
 
-
 # Gems
-COPY Gemfile /app/
-COPY Gemfile.lock /app/
-
-RUN bundle install --quiet --jobs 4
+ADD Gemfile Gemfile.lock /app/
+ADD vendor/cache /app/vendor/cache
+RUN bundle install --local --quiet --jobs 4 --deployment || bundle check
 
 # Code
 COPY config /app/config

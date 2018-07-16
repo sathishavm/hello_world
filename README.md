@@ -7,7 +7,7 @@ Things you may want to cover:
 
 * 2.5.1
 
-* System dependencies
+* ruby
 
 * Configuration
 

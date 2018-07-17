@@ -11,8 +11,6 @@ Things you may want to cover:
 
 * Configuration
 
-* Database initialization
-
 * rake test
 
 * Services (job queues, cache servers, search engines, etc.)

@@ -19,3 +19,4 @@ Things you may want to cover:
 
 * Deploy.md
 
+* test

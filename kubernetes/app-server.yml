@@ -1,0 +1,56 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-world
+  labels:
+    project: hello-world
+    role: app-server
+    team: bre
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      project: hello-world
+      role: app-server
+  template:
+    metadata:
+      name: hello-world-server
+      labels:
+        project: hello-world
+        role: app-server
+        team: bre
+      annotations:
+        samson/required_env: >
+          RAILS_ENV
+    spec:
+      containers:
+      - name: default
+        image: gcr.io/docker-image-builder-179319/hello-world:latest
+        resources:
+          limits:
+            cpu: '0.5'
+            memory: '100Mi'
+        ports:
+        - name: main
+          containerPort: 3000
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+  labels:
+    project: hello-world
+    role: app-server
+    team: bre
+    proxy: enabled
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: main
+  selector:
+    project: hello-world
+    role: app-server

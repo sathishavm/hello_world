@@ -7,13 +7,9 @@ Things you may want to cover:
 
 * 2.5.1
 
-* ruby
+* rails
 
 * Configuration
-
-* Database creation
-
-* Database initialization
 
 * rake test
 
@@ -21,3 +17,6 @@ Things you may want to cover:
 
 * Deployment instructions
 
+* Deploy.md
+
+* test

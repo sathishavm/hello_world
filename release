@@ -1,0 +1,146 @@
+// Exported from:        http://www.zd-mini.com/#/templates/Folderb69ec5f2a4fa4088992d931e3d3211a6-Release1c2f92fb4164bd3bcea24c501f865a5/releasefile
+// XL Release version:   8.1.0
+// Date created:         Fri Aug 10 18:36:41 UTC 2018
+
+def server(type, title, folderPath = null) {
+    def folderId = null
+    if(folderPath) {
+          folderId = folderApi.find(folderPath, 0).getId()
+    }
+    def cis = configurationApi.searchByTypeAndTitle(type, title, folderId)
+    if (cis.isEmpty()) {
+        throw new RuntimeException("No CI found for the type '${type}' and title '${title}'")
+    }
+    if (cis.size() > 1) {
+        throw new RuntimeException("More than one CI found for the type '${type}' and title '${title}'")
+    }
+    cis.get(0)
+}
+
+def authentication1 = server('travisci.Authentication','Travis-ci')
+def jenkinsServer1 = server('jenkins.Server','Jenkins QA')
+
+xlr {
+  release('hello_world') {
+    folder('zendesk')
+    variables {
+      stringVariable('commitId') {
+        
+      }
+    }
+    scheduledStartDate Date.parse("yyyy-MM-dd'T'HH:mm:ssZ", '2018-07-12T16:00:00+0000')
+    phases {
+      phase('Travis & GCB') {
+        color '#0099CC'
+        tasks {
+          parallelGroup('Parallel') {
+            tasks {
+              custom('Trigger Build123') {
+                script {
+                  type 'travisci.TriggerBuild'
+                  authentication authentication1
+                  organization 'sathishavm'
+                  project 'hello_world'
+                  wait true
+                  wait_interval '10'
+                }
+              }
+              custom('GCB Build') {
+                script {
+                  type 'webhook.PollingJsonWebhook'
+                  'URL' 'http://186fafac.ngrok.io/cgi-bin/gcb?commit=${commitId}'
+                  jsonPathExpression '{"result"}'
+                  targetValue 'SUCCESS'
+                  pollingInterval 300
+                  pollCount 20
+                  continueOnTimeout false
+                }
+              }
+            }
+          }
+        }
+      }
+      phase('Staging Deploy') {
+        color '#0099CC'
+        tasks {
+          custom('Samson') {
+            taskFailureHandlerEnabled true
+            taskRecoverOp com.xebialabs.xlrelease.domain.recover.TaskRecoverOp.RUN_SCRIPT
+            script {
+              type 'webhook.JsonWebhook'
+              'URL' 'http://249da73c.ngrok.io/cgi-bin/samson?branch=staging&commit=${commitId}'
+              body 
+              username 
+              password '{b64}kT+r1k+punb8JaDQvxlpEWIZf/6lJq67YCQ5y7SFfDQ8i61VgadWpi7xCgnKtQ9kjfG98LZhrZ/AiMcOsA3PhpKEO2hRPW+rnYslhQyu+xc='
+            }
+          }
+        }
+      }
+      phase('Jenkins and QA') {
+        color '#0099CC'
+        tasks {
+          custom('Jenkins automation scripts') {
+            script {
+              type 'jenkins.Build'
+              jenkinsServer jenkinsServer1
+              jobName 'hello_world'
+            }
+          }
+          manual('QA Manual test') {
+            owner 'qa'
+          }
+        }
+      }
+      phase('Approvals') {
+        color '#0099CC'
+        tasks {
+          manual('Staging Status') {
+            owner 'qa'
+          }
+          manual('Buddy approval') {
+            owner 'qa'
+          }
+        }
+      }
+      phase('Production Deploy & QA') {
+        color '#D94C3D'
+        tasks {
+          custom('Samson') {
+            delayDuringBlackout true
+            script {
+              type 'webhook.JsonWebhook'
+              'URL' 'http://249da73c.ngrok.io/cgi-bin/samson?branch=master&commit=${commitId}'
+            }
+          }
+          manual('Smoke Testing') {
+            owner 'qa'
+          }
+        }
+      }
+    }
+    extensions {
+      dashboard('Dashboard') {
+        parentId 'Applications/Folderb69ec5f2a4fa4088992d931e3d3211a6/Release1c2f92fb4164bd3bcea24c501f865a5'
+        owner 'admin'
+        tiles {
+          releaseProgressTile('Release progress') {
+            
+          }
+          releaseHealthTile('Release health') {
+            
+          }
+          releaseSummaryTile('Release summary') {
+            
+          }
+          resourceUsageTile('Resource usage') {
+            
+          }
+          timelineTile('Release timeline') {
+            
+          }
+        }
+      }
+    }
+    
+  }
+}

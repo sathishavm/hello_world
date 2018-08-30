@@ -27,10 +27,7 @@ spec:
       containers:
       - name: default
         image: gcr.io/docker-image-builder-179319/hello_world:latest
-        resources:
-          limits:
-            cpu: '0.5'
-            memory: '100Mi'
+        imagePullPolicy: Always
         ports:
         - name: main
           containerPort: 3000

@@ -6,6 +6,5 @@ steps:
       - "--tag=gcr.io/$PROJECT_ID/apps/hello_world:latest"
       - "--file=./Dockerfile"
       - "."
-
 images:
   - "gcr.io/$PROJECT_ID/apps/hello_world:latest"

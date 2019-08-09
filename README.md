@@ -17,4 +17,4 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* Deploy.md1
+* Deploy.md

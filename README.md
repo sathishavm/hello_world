@@ -18,3 +18,5 @@ Things you may want to cover:
 * Deployment instructions
 
 * Deploy.md
+
+* Test

@@ -40,7 +40,7 @@ spec:
           containerPort: 3000
           protocol: TCP
       imagePullSecrets:
-      - name: default-token-6vbdq
+      - name: spinnaker-poc-registry
 
 ---
 apiVersion: v1

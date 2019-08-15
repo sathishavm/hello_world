@@ -2,9 +2,9 @@ source:
   repoSource:
     projectId: docker-images-180022
     repoName: github_sathishavm_hello_world
-    commitSha: "${ _COMMIT }"
+    commitSha: "${commit_key}"
 substitutions:
-  _COMMIT: "$COMMIT_SHA"
+  commit_key: "$COMMIT_SHA"
 steps:
   - id: "docker-build"
     name: "gcr.io/cloud-builders/docker"

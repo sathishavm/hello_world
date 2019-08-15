@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: default
-        image: gcr.io/docker-image-builder-179319/hello_world:latest
+        image: gcr.io/docker-images-180022/apps/hello_world
         imagePullPolicy: Always
         resources:
           requests:
@@ -39,3 +39,5 @@ spec:
         - name: main
           containerPort: 3000
           protocol: TCP
+      imagePullSecrets:
+      - name: spinnaker-poc-registry

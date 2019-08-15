@@ -7,7 +7,7 @@ Things you may want to cover:
 
 * 2.5.1
 
-* rails
+* rails5
 
 * Configuration
 
@@ -19,6 +19,3 @@ Things you may want to cover:
 
 * Deploy.md
 
-* new test
-
-* Test3

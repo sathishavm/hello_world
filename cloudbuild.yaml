@@ -1,4 +1,4 @@
-source:
+resolvedRepoSource:
   repoSource:
     projectId: docker-images-180022
     repoName: github_sathishavm_hello_world

@@ -2,32 +2,35 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hello-world
+  name: 'hello-world-${ parameters.version }'
   labels:
     project: hello-world
     role: app-server
-    team: bre
-    version: v1
+    version: '${ parameters.version }'
 spec:
   replicas: 1
   selector:
     matchLabels:
       project: hello-world
       role: app-server
-      version: v1
+      version: '${ parameters.version }'
   template:
     metadata:
-      name: hello-world-server
       labels:
         project: hello-world
         role: app-server
-        team: bre
-        version: v1
+        version: '${ parameters.version }'
     spec:
       containers:
-      - name: default
+      - name: 'default-${ parameters.version }'
         image: gcr.io/docker-images-180022/apps/hello_world
         imagePullPolicy: Always
+        env:
+        - name: DDOG_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ddog
+              key: api_key
         resources:
           requests:
             cpu: '0.2'

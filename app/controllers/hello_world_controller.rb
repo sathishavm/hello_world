@@ -1,7 +1,7 @@
 class HelloWorldController < ApplicationController
 
     def index
-        @note = "Hello!! This is normal deployment."
+        @note = "Hello!! This is canary deployment."
         @version = "Production"
     end
 

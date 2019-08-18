@@ -15,5 +15,7 @@ steps:
       - IMAGE_NAME=gcr.io/$PROJECT_ID/apps/hello_world
       - BRANCH_NAME=$BRANCH_NAME
       - TAG_NAME=$TAG_NAME
+      - TAG_NON_MASTER_BRANCH=1
+      - TAG_RELEASE_BRANCH=1
 images:
   - "gcr.io/$PROJECT_ID/apps/hello_world"

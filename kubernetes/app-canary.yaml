@@ -2,27 +2,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hello-world-production
+  name: hello-world-canary
   labels:
     project: hello-world
     role: app-server
-    version: production
+    version: canary
 spec:
   replicas: 1
   selector:
     matchLabels:
       project: hello-world
       role: app-server
-      version: production
+      version: canary
   template:
     metadata:
       labels:
         project: hello-world
         role: app-server
-        version: production
+        version: canary
     spec:
       containers:
-      - name: default-production
+      - name: default-canary
         image: gcr.io/docker-images-180022/apps/hello_world
         imagePullPolicy: Always
         env:

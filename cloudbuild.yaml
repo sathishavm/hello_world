@@ -1,10 +1,19 @@
 steps:
-  - id: "docker-build"
-    name: "gcr.io/cloud-builders/docker"
+  - id: 'docker-build'
+    name: 'gcr.io/cloud-builders/docker'
     args:
-      - "build"
-      - "--tag=gcr.io/$PROJECT_ID/apps/hello_world:latest"
-      - "--file=./Dockerfile"
-      - "."
+      - 'build'
+      - '--cache-from=gcr.io/$PROJECT_ID/apps/hello_world:latest'
+      - '--tag=gcr.io/$PROJECT_ID/apps/hello_world:$SHORT_SHA'
+      - '--file=./Dockerfile'
+      - '.'
+
+  - id: 'tag-image'
+    name: 'gcr.io/$PROJECT_ID/cloud-builders/tagger'
+    env:
+      - SOURCE_IMAGE=gcr.io/$PROJECT_ID/apps/hello_world:$SHORT_SHA
+      - IMAGE_NAME=gcr.io/$PROJECT_ID/apps/hello_world
+      - BRANCH_NAME=$BRANCH_NAME
+      - TAG_NAME=$TAG_NAME
 images:
-  - "gcr.io/$PROJECT_ID/apps/hello_world:latest"
+  - "gcr.io/$PROJECT_ID/apps/hello_world"

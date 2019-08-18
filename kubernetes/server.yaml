@@ -6,10 +6,9 @@ metadata:
   labels:
     project: hello-world
     role: app-server
-    team: bre
+    team: eng-productivity
     proxy: enabled
 spec:
-  type: LoadBalancer
   ports:
   - port: 80
     targetPort: main

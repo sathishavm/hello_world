@@ -31,6 +31,8 @@ spec:
             secretKeyRef:
               name: ddog
               key: api_key
+        - name: VERSION
+          value: "Baseline"
         resources:
           requests:
             cpu: '0.2'

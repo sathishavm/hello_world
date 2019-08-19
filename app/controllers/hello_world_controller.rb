@@ -1,8 +1,7 @@
 class HelloWorldController < ApplicationController
 
     def index
-        @note = "Hello!! This is canary deployment."
-        @version = "Production"
+        @note = "Hello, Team!! This is demo for deployment strategies."
     end
 
     def failure

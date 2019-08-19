@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: default
-        image: gcr.io/docker-images-180022/apps/hello_world
+        image: gcr.io/docker-images-180022/apps/testhelloworld
         imagePullPolicy: Always
         resources:
           requests:

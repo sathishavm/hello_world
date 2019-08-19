@@ -11,6 +11,7 @@ metadata:
 spec:
   ports:
   - port: 80
+    name: http
     targetPort: main
   selector:
     project: hello-world

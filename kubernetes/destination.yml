@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: hello-world-ds
+  namespace: zendesk-canary
+spec:
+  host: hello-world
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+  - name: production
+    labels:
+      version: production
+  - name: canary
+    labels:
+      version: canary
+  - name: baseline
+    labels:
+      version: baseline

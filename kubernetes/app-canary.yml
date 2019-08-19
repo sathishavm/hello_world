@@ -41,6 +41,6 @@ spec:
         ports:
         - name: main
           containerPort: 3000
-          protocol: TCP
+          protocol: HTTP
       imagePullSecrets:
       - name: spinnaker-poc-registry

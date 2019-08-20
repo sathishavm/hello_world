@@ -1,7 +1,7 @@
 class HelloWorldController < ApplicationController
 
     def index
-        @note = "Hello, Team!! This is demo for deployment strategies!!"
+        @note = "Hello, Team!! Welcome team!!"
     end
 
     def failure

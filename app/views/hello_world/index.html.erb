@@ -1,2 +1,8 @@
 <h1> <%= @note%> </h1>
-<h1> <%= ENV%> </h1>
+<ul>
+<% Dir["/secrets/*"].each do |name| %>
+ <li> 
+ 	<b><%= name %></b><br/> <%= File.read("#{name}") %>
+</li>
+<%end%>
+</ul>

@@ -8,7 +8,7 @@ metadata:
     role: app-server
     team: bre
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       project: hello-world
@@ -21,9 +21,37 @@ spec:
         role: app-server
         team: bre
       annotations:
-        samson/required_env: >
-          RAILS_ENV
+        secret/APP_NAME: app_name
+        secret/TEAM: team
     spec:
+      serviceAccountName: vault-auth
+      volumes:
+      - name: secrets-volume
+        emptyDir:
+          medium: Memory
+      - name: secretkeys
+        downwardAPI:
+          items:
+          - path: "annotations"
+            fieldRef:
+              fieldPath: "metadata.annotations"
+      initContainers:
+      - name: 'secret-puller'
+        image: gcr.io/docker-images-180022/apps/samson_secret_puller:latest
+        volumeMounts:
+        - mountPath: /secretkeys
+          name: secretkeys
+        - mountPath: /secrets
+          name: secrets-volume
+        env:
+        - name: VAULT_ADDR
+          value: http://ec2-54-185-66-250.us-west-2.compute.amazonaws.com:8200
+        - name: VAULT_AUTH_TYPE
+          value: kubernetes
+        - name: VAULT_AUTH_ROLE
+          value: hello-world-role
+        - name: VAULT_PREFIX
+          value: hello-world
       containers:
       - name: default
         image: gcr.io/docker-images-180022/apps/testhelloworld
@@ -53,7 +81,7 @@ metadata:
     team: bre
     proxy: enabled
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: main

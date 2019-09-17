@@ -5,7 +5,7 @@ metadata:
   namespace: zendesk-canary
 spec:
   selector:
-    istio: ingressgateway
+    istio: spinnaker-ingressgateway
   servers:
   - port:
       number: 80

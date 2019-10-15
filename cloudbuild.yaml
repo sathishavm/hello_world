@@ -1,6 +1,6 @@
 steps:
   - id: "docker-build"
-    name: "gcr.io/cloud-builders/docker"
+    name: "gcr.io/cloud-builders/docker:18.06.1"
     args:
       - "build"
       - "--tag=gcr.io/$PROJECT_ID/apps/hello_world:latest"
